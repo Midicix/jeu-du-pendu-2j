@@ -241,6 +241,16 @@ lettre_texte12 = canvas.create_text(co_lettre12_x, co_lettre_y, text="",
 
 ##########################################################################################
 
+message_mot = canvas.create_text(150, 725, text="",
+    fill=couleur_titre,
+    font="Adventure 30 bold")
+
+message_mot_reponse = canvas.create_text(350, 725, text="",
+    fill=couleur_titre,
+    font="Adventure 30 bold")
+
+##########################################################################################
+
 boutonR = Button(fenetre, font='Times 20 bold', bg='orange',
                  fg='blue', text='new game', height=0, width=0,
                  command=lambda: rejouer(), padx=15, pady=5)
@@ -280,7 +290,6 @@ def init_mot():
     mots = mot.upper()
     for c in range(len(mots)):
         liste_lettre_mot.append(mots[c])
-    """print(liste_lettre_mot)"""
 
 compteur_erreur = 0
 compteur_juste = 0
@@ -467,20 +476,19 @@ def getEntry():
                         perdu()
                 else :
                     canvas.itemconfig(message_erreur3, text="Cette lettre est \ndéjà entrée")
-            elif contenu in liste_lettre_mot :
-                """print("bravo")"""
             remove_text()
+
+def getEntry2(event):
+    getEntry()
 
 ##########################################################################################
 
 def main():
-    """personnage()
-    plateforme()"""
-    init_mot()
     liste_lettre_texte = [lettre_texte1, lettre_texte2, lettre_texte3, lettre_texte4, lettre_texte5, lettre_texte6, lettre_texte7, lettre_texte8, lettre_texte9 , lettre_texte10, lettre_texte11, lettre_texte12]
     boutonR.config(state = tkinter.DISABLED)
     for c in liste_lettre_texte :
             canvas.itemconfig(c, text="")
+    init_mot()
     trait_mot()
 
 def remove_text():
@@ -506,16 +514,12 @@ def trait_mot():
     else :
         for trait in liste_trait:
             if compteur_local != len(mots) :
-                print("BIEN")
                 compteur_local += 1
                 canvas.itemconfig(trait, fill = couleur_structure)
-        else :
-            print("STOP")
     for c in range(len(mots)):
         if c not in liste_lettre :
             compteur_lettres_reeles += 1 
     caractere_speciaux()
-    print("##############################################")
     caractere_speciaux2()
 
 compteur_lettre = 0
@@ -536,21 +540,11 @@ def caractere_speciaux():
             compteur_lettre = 0
             lettre = caractere
             len_lettre = liste_lettre_mot.count(lettre)
-            print("T'es sûr ?")
-            print("1 : ", lettre)
-            print("2 : ", liste_lettre_mot)
-            print("3 : ", len_lettre)
-            print("4 : ", compteur_lettre)
             compteur_victoire += len_lettre
             while compteur_lettre < len_lettre :
                 w = liste_lettre_mot.index(lettre, position) # Find next letter starting a position x
                 position = w + 1
                 compteur_lettre += 1
-                """compteur_victoire += 1"""
-
-                """print("Position de la lettre par rapport à la liste en commençant par 4 : " , position)
-                print("nombre de lettre t : " , len_lettre)"""
-                print(w)
                 if position == 1 :
                     canvas.itemconfig(lettre_texte1, text=lettre)
                     disparition_trait_mot1()
@@ -587,8 +581,6 @@ def caractere_speciaux():
                 elif position == 12 :
                     canvas.itemconfig(lettre_texte12, text=lettre)
                     disparition_trait_mot12()
-                else :
-                    print("t'es nul")
                     
 def caractere_speciaux2():
     global compteur_victoire, compteur_relancer, liste_lettre_mot, compteur_lettre
@@ -606,22 +598,11 @@ def caractere_speciaux2():
             compteur_lettre = 0
             lettre = caractere
             len_lettre = liste_lettre_mot.count(lettre)
-            print("T'es sûr ?")
-            print("1 : ", lettre)
-            print("2 : ", liste_lettre_mot)
-            print("3 : ", len_lettre)
-            print("4 : ", compteur_lettre)
             compteur_victoire += len_lettre
             while compteur_lettre < len_lettre :
                 w = liste_lettre_mot.index(lettre, position) # Find next letter starting a position x
                 position = w + 1
                 compteur_lettre += 1
-                print("5 : ", compteur_lettre)
-                """compteur_victoire += 1"""
-
-                """print("Position de la lettre par rapport à la liste en commençant par 4 : " , position)
-                print("nombre de lettre t : " , len_lettre)"""
-                print(w)
                 if position == 1 :
                     canvas.itemconfig(lettre_texte1, text=lettre)
                     disparition_trait_mot1()
@@ -658,8 +639,6 @@ def caractere_speciaux2():
                 elif position == 12 :
                     canvas.itemconfig(lettre_texte12, text=lettre)
                     disparition_trait_mot12()
-                else :
-                    print("t'es nul")
 
 ##########################################################################################
 
@@ -678,20 +657,6 @@ co_lettre11_x = 825
 co_lettre12_x = 900
 
 ##########################################################################################
-
-"""canvas.itemconfig(trait_mot1, fill = couleur_structure)
-canvas.itemconfig(trait_mot2, fill = couleur_structure)
-canvas.itemconfig(trait_mot3, fill = couleur_structure)
-canvas.itemconfig(trait_mot4, fill = couleur_structure)
-canvas.itemconfig(trait_mot5, fill = couleur_structure)
-canvas.itemconfig(trait_mot6, fill = couleur_structure)
-canvas.itemconfig(trait_mot7, fill = couleur_structure)
-canvas.itemconfig(trait_mot8, fill = couleur_structure)
-canvas.itemconfig(trait_mot9, fill = couleur_structure)
-canvas.itemconfig(trait_mot10, fill = couleur_structure)
-canvas.itemconfig(trait_mot11, fill = couleur_structure)
-canvas.itemconfig(trait_mot12, fill = couleur_structure)"""
-
 
 def disparition_trait_mot1():
     canvas.itemconfig(trait_mot1, fill = couleur_fond)
@@ -742,9 +707,7 @@ compteur_relancer = 0
 def verification():
     global contenue, liste_lettre_mot, compteur_victoire, compteur_relancer, liste_lettre_texte
     liste_lettre_texte = [lettre_texte1, lettre_texte2, lettre_texte3, lettre_texte4, lettre_texte5, lettre_texte6, lettre_texte7, lettre_texte8, lettre_texte9 , lettre_texte10, lettre_texte11, lettre_texte12]
-    print("Oui")
     if compteur_relancer == 1 :
-        print("Encore")
         compteur_relancer = 0
         compteur_victoire = 0
         compteur_lettre = 0
@@ -755,18 +718,11 @@ def verification():
         compteur_lettre = 0
         lettre = contenue.upper()
         len_lettre = liste_lettre_mot.count(lettre)
-        """print(lettre)
-        print(liste_lettre_mot)
-        print(len_lettre)"""
         while compteur_lettre < len_lettre :
             w = liste_lettre_mot.index(lettre, position) # Find next letter starting a position x
             position = w + 1
             compteur_lettre += 1
             compteur_victoire += 1
-
-            """print("Position de la lettre par rapport à la liste en commençant par 4 : " , position)
-            print("nombre de lettre t : " , len_lettre)"""
-            
             if position == 1 :
                 canvas.itemconfig(lettre_texte1, text=lettre)
             elif position == 2 :
@@ -791,15 +747,12 @@ def verification():
                 canvas.itemconfig(lettre_texte11, text=lettre)
             elif position == 12 :
                 canvas.itemconfig(lettre_texte12, text=lettre)
-            else :
-                print("t'es nul")
                 
 compteur_lettres_reeles = 0
 
 def rejouer() :
     global compteur_relancer, liste_lettre, liste_lettre_mot, liste_lettre_erreur, liste_lettre_entre, compteur_erreur, mot, mots
     #Fonction reset à coder (qui sera appellé avec le bouton rejouer)
-    print("relancer")
     recommencer = tkinter.messagebox.askretrycancel("Pendu", "Voulez-vous commencer une nouvelle partie ?")
     if recommencer == True:
         compteur_relancer += 1
@@ -817,12 +770,15 @@ def rejouer() :
             bouton.configure(state=NORMAL)
         for lettre_fausse in liste_lettre_erreur_afficher :
             canvas.itemconfig(lettre_fausse, text="")
+        canvas.itemconfig(message_mot, text="")
+        canvas.itemconfig(message_mot_reponse, text="")
         saisie.config(state = tkinter.NORMAL)
         caractere_speciaux()
         caractere_speciaux2()
         verification()
         remove_text()
         main()
+        
 
 def verification_victoire():
     global compteur_victoire, compteur_lettres_reeles, compteur_relancer
@@ -830,12 +786,8 @@ def verification_victoire():
         compteur_victoire = 0
         compteur_lettres_reeles = 0
     else :
-        print(compteur_lettres_reeles)
-        print(compteur_victoire)
         compteur_entier = compteur_victoire + compteur_lettres_reeles
-        print(compteur_entier)
         if compteur_victoire == len(mots) :
-            print("gagnant")
             messagebox.showinfo('Bravo', 'Tu es un BOSS')
             eteindre_bouton()
 
@@ -847,7 +799,8 @@ def eteindre_bouton():
         
 def perdu():
     eteindre_bouton()
-    print("loser")
+    canvas.itemconfig(message_mot, text="le mot étais :")
+    canvas.itemconfig(message_mot_reponse, text=mots)
     messagebox.showinfo('Bravo', 'Tu es un LOSER')
 
 def stop() :
@@ -860,5 +813,6 @@ def arret_forcer() :
 
 ##########################################################################################
 
+fenetre.bind('<Return>', getEntry2)
 main()
 fenetre.mainloop()
