@@ -241,11 +241,7 @@ lettre_texte12 = canvas.create_text(co_lettre12_x, co_lettre_y, text="",
 
 ##########################################################################################
 
-message_mot = canvas.create_text(150, 725, text="",
-    fill=couleur_titre,
-    font="Adventure 30 bold")
-
-message_mot_reponse = canvas.create_text(350, 725, text="",
+message_mot = canvas.create_text(550, 725, text="",
     fill=couleur_titre,
     font="Adventure 30 bold")
 
@@ -799,8 +795,7 @@ def eteindre_bouton():
         
 def perdu():
     eteindre_bouton()
-    canvas.itemconfig(message_mot, text="le mot étais :")
-    canvas.itemconfig(message_mot_reponse, text=mots)
+    canvas.itemconfig(message_mot, text="le mot était : " + mots)
     messagebox.showinfo('Bravo', 'Tu es un LOSER')
 
 def stop() :
